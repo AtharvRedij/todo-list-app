@@ -1,3 +1,4 @@
+const path = require("path");
 const express = require("express");
 const mongoose = require("mongoose");
 const todos = require("./routes/todos");
@@ -15,8 +16,12 @@ mongoose
 const app = express();
 
 app.use(express.json());
+app.use(express.static("public"));
 
 app.use("/api/todos", todos);
+app.get("/", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "public", "index.html"));
+});
 
 const PORT = process.env.PORT || 5000;
 
